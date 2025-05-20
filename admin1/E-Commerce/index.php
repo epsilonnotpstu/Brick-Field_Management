@@ -1,5 +1,5 @@
 <?php
-session_start(); // Start the session
+session_start(); 
 include 'config/db.php';
 ?>
 <!DOCTYPE html>
@@ -54,6 +54,9 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 <footer>
 <p>&copy; 2023 Brick Field E-Commerce. All rights reserved.</p>
 </footer>
+
+
+<!-- see -->
 
 <script src="js/main.js"></script>
 </body>
