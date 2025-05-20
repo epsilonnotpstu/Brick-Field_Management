@@ -807,3 +807,203 @@ a:hover {
         text-align: center;
     }
 }
+
+/* Table Styles for Orders */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-top: 1rem;
+}
+
+.table thead {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.table tbody tr:nth-child(even) {
+    background: var(--gray);
+}
+
+.table tbody tr:hover {
+    background: var(--light-color);
+}
+
+.table td {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.table td:first-child {
+    font-weight: 500;
+}
+
+.table td select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.table td select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+}
+
+/* Sub-Table Styles for Order Details and Payments */
+.sub-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f9f9;
+    margin: 1rem 0;
+}
+
+.sub-table thead {
+    background: var(--secondary-color);
+    color: var(--white);
+}
+
+.sub-table th {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.sub-table td {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #eee;
+}
+
+.sub-table tbody tr:nth-child(even) {
+    background: #f0f0f0;
+}
+
+/* Order Details Section */
+.order-details {
+    display: none;
+}
+
+.order-details.active {
+    display: table-row;
+}
+
+.order-details-content {
+    padding: 1rem;
+    background: var(--white);
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.order-details-content h4 {
+    margin: 1rem 0 0.5rem;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+/* Inline Form Styles */
+.inline-form {
+    display: contents;
+}
+
+.inline-form button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.inline-form .form-group {
+    margin: 0.5rem 0;
+}
+
+.inline-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    resize: vertical;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .table, .sub-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .table thead, .table tbody, .table tr, .table th, .table td,
+    .sub-table thead, .sub-table tbody, .sub-table tr, .sub-table th, .sub-table td {
+        display: block;
+    }
+
+    .table thead tr, .sub-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .table tbody tr, .sub-table tbody tr {
+        margin-bottom: 1rem;
+        border: 1px solid #eee;
+        border-radius: 6px;
+    }
+
+    .table td, .sub-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .table td::before, .sub-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--primary-color);
+        flex: 1;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    .table td:last-child, .sub-table td:last-child {
+        border-bottom: none;
+    }
+
+    .table td select, .inline-form textarea {
+        flex: 2;
+    }
+
+    .inline-form button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .order-details {
+        display: table-row;
+    }
+
+    .order-details-content {
+        padding: 0.5rem;
+    }
+}
