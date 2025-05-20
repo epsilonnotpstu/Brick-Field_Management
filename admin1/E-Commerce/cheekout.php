@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Calculate order totals
             $subtotal = 0;
-            $vat_rate = 0.15; // 15% VAT
+            $vat_rate = 0.20; // 20% VAT
             foreach ($_SESSION['cart'] as $item) {
                 $subtotal += $item['price'] * $item['quantity'];
             }
