@@ -677,3 +677,133 @@ a:hover {
         border-bottom: none;
     }
 }
+
+/* Table Styles for Inventory, Raw Materials, and Product Stock */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-top: 1rem;
+}
+
+.table thead {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.table tbody tr:nth-child(even) {
+    background: var(--gray);
+}
+
+.table tbody tr:hover {
+    background: var(--light-color);
+}
+
+.table td {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.table td:first-child {
+    font-weight: 500;
+}
+
+.table td input[type="number"],
+.table td select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.table td input[type="number"]:focus,
+.table td select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+}
+
+/* Inline Form Styles for Product Stock Updates */
+.inline-form {
+    display: contents;
+}
+
+.inline-form button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .table thead, .table tbody, .table tr, .table th, .table td {
+        display: block;
+    }
+
+    .table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .table tbody tr {
+        margin-bottom: 1rem;
+        border: 1px solid #eee;
+        border-radius: 6px;
+    }
+
+    .table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--primary-color);
+        flex: 1;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    .table td:last-child {
+        border-bottom: none;
+    }
+
+    .table td input[type="number"],
+    .table td select {
+        flex: 2;
+    }
+
+    .inline-form button {
+        width: 100%;
+        text-align: center;
+    }
+}
