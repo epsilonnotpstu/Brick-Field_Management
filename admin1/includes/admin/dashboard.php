@@ -19,7 +19,10 @@ try {
     $stmt = $conn->prepare("SELECT SUM(quantity_produced) FROM Production WHERE production_date = ?");
     $stmt->execute([$today]);
     $todays_production = $stmt->fetchColumn() ?? 0;
-
+    //All Production
+    $stmt = $conn->prepare("SELECT SUM(quantity_produced) FROM Production ");
+    $stmt->execute();
+    $all_production = $stmt->fetchColumn() ?? 0;
     // Pending Orders
     $stmt = $conn->query("SELECT COUNT(*) FROM Orders WHERE status = 'pending'");
     $pending_orders = $stmt->fetchColumn();
@@ -184,6 +187,7 @@ try {
                         <p><?php echo number_format($todays_production); ?></p>
                         <small>Bricks produced today</small>
                     </div>
+                    
                 </div>
                 
                 <div class="stat-card">
@@ -205,6 +209,18 @@ try {
                         <h3>Today's Revenue</h3>
                         <p>৳<?php echo number_format($todays_revenue, 2); ?></p>
                         <small>Paid orders today</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>All Production</h3>
+                        <p><?php echo number_format($all_production); ?></p>
+                        <small>All Bricks Produced</small>
+
                     </div>
                 </div>
             </div>
