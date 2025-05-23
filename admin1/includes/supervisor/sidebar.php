@@ -16,12 +16,12 @@ $supervisor = $stmt->fetch(PDO::FETCH_ASSOC);
         <div class="profile-image">
             <i class="fas fa-user-tie"></i>
         </div>
-        <h3><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'User'; ?></h3>
+        <p><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'User'; ?></p>
         <p>Supervisor</p>
         <p><?php echo isset($supervisor['field_name']) ? htmlspecialchars($supervisor['field_name']) : 'N/A'; ?></p>
     </div>
     
-    <nav>
+    <nav class="nav-container">
         <ul>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>">
                 <a href="dashboard.php">
@@ -52,6 +52,13 @@ $supervisor = $stmt->fetch(PDO::FETCH_ASSOC);
                 <a href="firing.php">
                     <i class="fas fa-users"></i>
                     <span>Kiln & Firing</span>
+                </a>
+            </li>
+
+            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'suppliers.php' ? 'active' : ''; ?>">
+                <a href="suppliers.php">
+                    <i class="fas fa-truck"></i>
+                    <span>Suppliers</span>
                 </a>
             </li>
 
