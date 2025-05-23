@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Brick Field E-Commerce</h1>
         <nav>
     <ul>
-        <li><a href="index.php">Home</a></li>
+        <!-- <li><a href="index.php">Home</a></li> -->
         <!-- <li><a href="products.php">Products</a></li> -->
         <!-- <li><a href="cart.php">Cart <span id="cart-count">0</span></a></li> -->
         <li><a href="login.php">Login</a></li>

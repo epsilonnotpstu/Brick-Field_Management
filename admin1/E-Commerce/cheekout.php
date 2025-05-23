@@ -60,8 +60,9 @@ if ($user_id) {
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="products.php">Products</a></li>
-                <li><a href="cart.php">Cart</a></li>
+                <li><a href="cart.php">Cart<span id="cart-count">0</span></a></li>
                 <li><a href="dashboard.php">My Account</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -145,7 +146,7 @@ if ($user_id) {
                                 isset($_POST['notes']) ? htmlspecialchars($_POST['notes']) : '' 
                             ?></textarea>
                         </div>
-                        <button type="submit" class="btn"><a href="order.php">Place Order</a></button>
+                        <button type="submit" class="btn">Place Order</button>
                     </form>
                 </div>
                 <div class="order-summary">

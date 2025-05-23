@@ -45,7 +45,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <a href="../includes/login.php">Login</a>
                         </li>
 
-                        <li><a href="../E-Commerce/index.php">Visit Our E-Commerce Website</a></li>
+                        <li><a href="../E-Commerce/login.php">Visit Our E-Commerce Website</a></li>
                 </ul>
             </nav>
             

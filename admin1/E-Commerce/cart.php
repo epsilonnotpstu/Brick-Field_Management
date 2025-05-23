@@ -14,8 +14,10 @@
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="products.php">Products</a></li>
-                <li><a href="cart.php">Cart</a></li>
-                <li><a href="login.php">Login</a></li>
+                <li><a href="cart.php">Cart<span id="cart-count">0</span></a></li>
+                <!-- <li><a href="login.php">Login</a></li> -->
+                 <li><a href="dashboard.php">My Account</a></li>
+                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
