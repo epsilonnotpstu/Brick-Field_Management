@@ -346,7 +346,7 @@ $brick_types = $conn->query("SELECT * FROM BrickType ORDER BY type_name")->fetch
                 <tr>
                     <th>Name</th>
                     <th>Size</th>
-                    <th>Weight</th>
+                    <!-- <th>Weight</th> -->
                     <th>Actions</th>
                 </tr>
                 </thead>

@@ -20,7 +20,7 @@ try {
     $stmt->execute([$today]);
     $todays_production = $stmt->fetchColumn() ?? 0;
     //All Production
-    $stmt = $conn->prepare("SELECT SUM(quantity_produced) FROM Production ");
+    $stmt = $conn->prepare("SELECT SUM(quantity_produced) FROM Production");
     $stmt->execute();
     $all_production = $stmt->fetchColumn() ?? 0;
     // Pending Orders
