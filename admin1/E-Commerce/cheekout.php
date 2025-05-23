@@ -2,120 +2,49 @@
 session_start();
 require_once 'config/db.php';
 
-// Redirect if cart is empty
-// if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
-//     header("Location: cheekout.php");
-//     exit();
-// }
+// Check if user is logged in
+$user_id = $_SESSION['user_id'] ?? null;
 
-// Process checkout
-$errors = [];
-$success = false;
-$order_id = null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate form inputs
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone_number']);
-    $shipping_address = trim($_POST['shipping_address']);
-    $billing_address = trim($_POST['billing_address']) ?: $shipping_address;
-    $payment_method = $_POST['payment_method'];
-    $notes = trim($_POST['notes'] ?? '');
-
-    // Validation
-    if (empty($name)) $errors[] = "Name is required";
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Valid email is required";
-    if (empty($phone)) $errors[] = "Phone number is required";
-    if (empty($shipping_address)) $errors[] = "Shipping address is required";
-    if (!in_array($payment_method, ['cash', 'bkash', 'nagad', 'card', 'bank_transfer'])) {
-        $errors[] = "Invalid payment method";
-    }
-
-    if (empty($errors)) {
-        try {
-            // Begin transaction
-            $pdo->beginTransaction();
-
-            // Calculate order totals
-            $subtotal = 0;
-            $vat_rate = 0.20; // 20% VAT
-            foreach ($_SESSION['cart'] as $item) {
-                $subtotal += $item['price'] * $item['quantity'];
-            }
-            $vat_amount = round($subtotal * $vat_rate, 2);
-            $total_amount = $subtotal + $vat_amount;
-
-            // 1. Save/update customer
-            $customer_id = $_SESSION['user_id'] ?? null;
-            if (!$customer_id) {
-                $stmt = $pdo->prepare("INSERT INTO Customers (user_id, full_name, phone_number, shipping_address, billing_address) 
-                                     VALUES (NULL, ?, ?, ?, ?)");
-                $stmt->execute([$name,  $phone, $shipping_address, $billing_address]);
-                $customer_id = $pdo->lastInsertId();
-            }
-
-            // 2. Create order
-            $stmt = $pdo->prepare("
-                INSERT INTO Orders (
-                    customer_id, shipping_address, billing_address,
-                    subtotal, vat_amount, total_amount, 
-                    payment_method, notes
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ");
-            $stmt->execute([
-                $customer_id, $shipping_address, $billing_address,
-                $subtotal, $vat_amount, $total_amount,
-                $payment_method, $notes
-            ]);
-            $order_id = $pdo->lastInsertId();
-
-            // 3. Save order items
-            foreach ($_SESSION['cart'] as $product_id => $item) {
-                $stmt = $pdo->prepare("
-                    INSERT INTO OrderDetails (
-                        order_id, product_id, quantity, 
-                        unit_price, discount_percentage
-                    ) VALUES (?, ?, ?, ?, ?)
-                ");
-                $stmt->execute([
-                    $order_id, $product_id, $item['quantity'],
-                    $item['price'], $item['discount'] ?? 0
-                ]);
-
-                // Update inventory
-                $stmt = $pdo->prepare("UPDATE Products SET stock_quantity = stock_quantity - ? WHERE product_id = ?");
-                $stmt->execute([$item['quantity'], $product_id]);
-            }
-
-            // Commit transaction
-            $pdo->commit();
-
-            // Clear cart and set success
-            unset($_SESSION['cart']);
-            $success = true;
-
-        } catch (PDOException $e) {
-            $pdo->rollBack();
-            $errors[] = "Order processing failed: " . $e->getMessage();
-            error_log("Checkout Error: " . $e->getMessage());
-        }
-    }
-}
-
-// Calculate cart totals for display
+// Fetch cart items
+$cart_items = [];
 $cart_subtotal = 0;
 $cart_vat = 0;
 $cart_total = 0;
+$vat_rate = 0.15; // 15% VAT as per original cheekout.php
 
-if (isset($_SESSION['cart'])) {
-    foreach ($_SESSION['cart'] as $item) {
-        $cart_subtotal += $item['price'] * $item['quantity'];
+if ($user_id) {
+    try {
+        // Get user's cart
+        $stmt = $pdo->prepare("SELECT cart_id FROM Cart WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $cart = $stmt->fetch();
+
+        if ($cart) {
+            // Fetch cart items with product details
+            $stmt = $pdo->prepare("
+                SELECT ci.product_id, ci.quantity, p.display_name, p.base_price, p.discount_price, p.image_url
+                FROM CartItems ci
+                JOIN Products p ON ci.product_id = p.product_id
+                WHERE ci.cart_id = ?
+            ");
+            $stmt->execute([$cart['cart_id']]);
+            $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Calculate totals
+            foreach ($cart_items as $item) {
+                $price = $item['discount_price'] ?? $item['base_price'];
+                $cart_subtotal += $price * $item['quantity'];
+            }
+            $cart_vat = round($cart_subtotal * $vat_rate, 2);
+            $cart_total = $cart_subtotal + $cart_vat;
+        }
+    } catch (PDOException $e) {
+        error_log("Checkout Error: " . $e->getMessage());
+        $errors[] = "Failed to load cart: " . $e->getMessage();
     }
-    $cart_vat = round($cart_subtotal * 0.15, 2);
-    $cart_total = $cart_subtotal + $cart_vat;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -125,7 +54,7 @@ if (isset($_SESSION['cart'])) {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-     <header>
+    <header>
         <h1>Brick Field E-Commerce</h1>
         <nav>
             <ul>
@@ -133,7 +62,6 @@ if (isset($_SESSION['cart'])) {
                 <li><a href="products.php">Products</a></li>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a href="dashboard.php">My Account</a></li>
-                <!-- <li><a href="../logout.php">Logout</a></li> -->
             </ul>
         </nav>
     </header>
@@ -141,21 +69,16 @@ if (isset($_SESSION['cart'])) {
     <main class="container checkout-page">
         <h1>Checkout</h1>
 
-        <?php if ($success): ?>
-            <div class="success-message">
-                <h2>Order #<?= $order_id ?> Placed Successfully!</h2>
-                <p>Thank you for your purchase. We'll process your order shortly.</p>
-                <div class="order-summary">
-                    <p><strong>Total Amount:</strong> ৳<?= number_format($cart_total, 2) ?></p>
-                    <p><strong>Payment Method:</strong> <?= ucfirst(str_replace('_', ' ', $payment_method)) ?></p>
-                </div>
+        <?php if (empty($cart_items)): ?>
+            <div class="error-message">
+                <p>Your cart is empty. Please add items to proceed.</p>
                 <a href="products.php" class="btn">Continue Shopping</a>
             </div>
         <?php else: ?>
             <div class="checkout-grid">
                 <div class="checkout-form">
                     <h2>Billing & Shipping</h2>
-                    
+
                     <?php if (!empty($errors)): ?>
                         <div class="error-message">
                             <ul>
@@ -166,41 +89,36 @@ if (isset($_SESSION['cart'])) {
                         </div>
                     <?php endif; ?>
 
-                    <form method="POST">
-                        <?php if (!isset($_SESSION['user_id'])): ?>
+                    <form method="POST" action="order.php">
+                        <?php if (!$user_id): ?>
                             <div class="form-group">
                                 <label for="name">Full Name*</label>
-                                <input type="text" id="name" name="name" required 
+                                <input type="text" id="name" name="name" required
                                        value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '' ?>">
                             </div>
-                            
                             <div class="form-group">
                                 <label for="email">Email*</label>
                                 <input type="email" id="email" name="email" required
                                        value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
                             </div>
-                            
                             <div class="form-group">
                                 <label for="phone">Phone*</label>
-                                <input type="tel" id="phone" name="phone" required
-                                       value="<?= isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '' ?>">
+                                <input type="tel" id="phone" name="phone_number" required
+                                       value="<?= isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : '' ?>">
                             </div>
                         <?php endif; ?>
-                        
                         <div class="form-group">
                             <label for="shipping_address">Shipping Address*</label>
                             <textarea id="shipping_address" name="shipping_address" required><?= 
                                 isset($_POST['shipping_address']) ? htmlspecialchars($_POST['shipping_address']) : '' 
                             ?></textarea>
                         </div>
-                        
                         <div class="form-group">
                             <label for="billing_address">Billing Address (if different)</label>
                             <textarea id="billing_address" name="billing_address"><?= 
                                 isset($_POST['billing_address']) ? htmlspecialchars($_POST['billing_address']) : '' 
                             ?></textarea>
                         </div>
-                        
                         <div class="form-group">
                             <label>Payment Method*</label>
                             <div class="payment-options">
@@ -221,33 +139,31 @@ if (isset($_SESSION['cart'])) {
                                 ?>> Bank Transfer</label>
                             </div>
                         </div>
-                        
                         <div class="form-group">
                             <label for="notes">Order Notes</label>
                             <textarea id="notes" name="notes"><?= 
                                 isset($_POST['notes']) ? htmlspecialchars($_POST['notes']) : '' 
                             ?></textarea>
                         </div>
-                        
-                        <button type="submit" class="btn">Place Order</button>
+                        <button type="submit" class="btn"><a href="order.php">Place Order</a></button>
                     </form>
                 </div>
-                
                 <div class="order-summary">
                     <h2>Your Order</h2>
                     <div class="summary-items">
-                        <?php foreach ($_SESSION['cart'] as $id => $item): ?>
+                        <?php foreach ($cart_items as $item): ?>
                             <div class="summary-item">
-                                <span class="item-name"><?= htmlspecialchars($item['name']) ?></span>
+                                <span class="item-name"><?= htmlspecialchars($item['display_name']) ?></span>
                                 <span class="item-quantity"><?= $item['quantity'] ?> ×</span>
-                                <span class="item-price">৳<?= number_format($item['price'], 2) ?></span>
-                                <?php if ($item['discount'] > 0): ?>
-                                    <span class="item-discount">(<?= $item['discount'] ?>% off)</span>
+                                <span class="item-price">৳<?= number_format($item['discount_price'] ?? $item['base_price'], 2) ?></span>
+                                <?php if ($item['discount_price'] && $item['discount_price'] < $item['base_price']): ?>
+                                    <span class="item-discount">
+                                        (<?= number_format((($item['base_price'] - $item['discount_price']) / $item['base_price']) * 100, 2) ?>% off)
+                                    </span>
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    
                     <div class="summary-totals">
                         <div class="summary-row">
                             <span>Subtotal:</span>
@@ -267,8 +183,8 @@ if (isset($_SESSION['cart'])) {
         <?php endif; ?>
     </main>
 
-   <footer>
-        <p>&copy; <?php echo date('Y'); ?> Brick Field E-Commerce. All rights reserved.</p>
+    <footer>
+        <p>© <?= date('Y') ?> Brick Field E-Commerce. All rights reserved.</p>
     </footer>
 </body>
 </html>

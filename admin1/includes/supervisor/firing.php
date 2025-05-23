@@ -417,6 +417,7 @@ $ongoing_firings = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </section>
             
             <!-- Start Drying -->
+        <div class="forms-wrapper">    
             <section class="form-container">
                 <h3>Start Drying Process</h3>
                 <form method="POST" class="auth-form">
@@ -490,7 +491,7 @@ $ongoing_firings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </form>
                 <?php endif; ?>
             </section>
-            
+        </div>    
             <!-- Recent Drying Processes -->
             <section class="form-container">
                 <h3>Recent Drying Processes</h3>

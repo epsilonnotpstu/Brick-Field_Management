@@ -1329,7 +1329,7 @@ a:hover {
     width: 250px;
     height: 100vh;
     position: fixed;
-    top: 100;
+    top: 70;
     left: -250px;
     transition: left 0.3s ease;
     z-index: 999;
@@ -1629,9 +1629,11 @@ a:hover {
     margin-bottom: 2rem;
 }
 
-.raw-materials .form-container {
+.raw-materials  {
     margin-bottom: 1.5rem;
+    
 }
+
 
 /* Ensure table styles are present */
 .record-table {
@@ -1740,3 +1742,35 @@ a:hover {
 .record-table tr:hover {
     background: var(--gray);
 }
+
+.forms-wrapper {
+    display: flex;
+    gap: 2rem; /* Space between the forms */
+    justify-content: space-between; /* Pushes forms to opposite sides */
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.form-container{
+     margin-bottom: 1.5rem;
+    flex: 1; /* Allows both forms to grow equally */
+    min-width: 300px; /* Minimum width before wrapping */
+}
+
+
+h3 {
+    padding: 15px;
+    background-color: #eee;
+}
+
+h4 {
+    padding: 15px;
+    background-color: #eee;
+}
+/* .form-section-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+} */

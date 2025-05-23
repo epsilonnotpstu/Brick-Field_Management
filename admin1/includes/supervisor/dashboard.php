@@ -55,7 +55,7 @@ $stmt = $conn->prepare("
     FROM Employees e
     LEFT JOIN Attendance a ON e.employee_id = a.employee_id 
         AND DATE(a.date) = ?
-    WHERE e.field_id = ? AND e.role = 'worker'
+    WHERE e.field_id = ? IN ('worker', 'molder', 'kiln operator', 'driver', 'accountant', 'others')
 ");
 $stmt->execute([$today, $supervisor['field_id']]);
 $attendance_data = $stmt->fetch(PDO::FETCH_ASSOC);

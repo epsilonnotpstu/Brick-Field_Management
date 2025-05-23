@@ -1,4 +1,4 @@
-<!-- <?php
+ <?php
 // Start session to check user status
 session_start();
 
@@ -29,4 +29,4 @@ $is_logged_in = isset($_SESSION['user_id']);
         </div>
     </div>
 </body>
-</html> -->
+</html> 

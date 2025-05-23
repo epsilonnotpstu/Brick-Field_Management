@@ -29,6 +29,7 @@ if (!$supervisor) {
 // Handle Record Expense
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['record_expense'])) {
     try {
+        //$field_id = $_POST['field_id'];
         $category = $_POST['category'];
         $amount = $_POST['amount'];
         $description = $_POST['description'] ?: null;
@@ -249,7 +250,9 @@ $suppliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="alert alert-danger"><?php echo $error_message; ?></div>
             <?php endif; ?>
             
+            
             <!-- Record Expense -->
+        <div class="forms-wrapper">
             <section class="form-container">
                 <h3>Record Expense</h3>
                 <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -329,7 +332,8 @@ $suppliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <button type="submit" class="btn btn-primary">Record Receipt</button>
                 </form>
             </section>
-            
+       
+        </div>                        
             <!-- Filter Expenses -->
             <section class="form-container">
                 <h3>Filter Expenses</h3>

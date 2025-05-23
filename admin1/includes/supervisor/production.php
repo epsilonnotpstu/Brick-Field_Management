@@ -216,7 +216,7 @@ $productions_for_loss = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <?php include 'header.php'; ?>
     
-    <div class="dashboard-container">
+    < class="dashboard-container">
         <?php include 'sidebar.php'; ?>
         
         <main class="main-content">
@@ -263,6 +263,7 @@ $productions_for_loss = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 
                 <!-- Add Material Receipt -->
+             <div class="forms-wrapper">   
                 <div class="form-container">
                     <h4>Add Material Receipt</h4>
                     <form method="POST" class="auth-form">
@@ -309,6 +310,7 @@ $productions_for_loss = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <button type="submit" class="btn btn-primary">Record Consumption</button>
                     </form>
                 </div>
+              </div>   
             </section>
             
             <!-- Raw Brick Production Section -->
