@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <footer>
-        <p>&copy; 2023 Brick Field E-Commerce. All rights reserved.</p>
+        <p>&copy; 2025 Brick Field E-Commerce. All rights reserved.</p>
     </footer>
 </body>
 </html>

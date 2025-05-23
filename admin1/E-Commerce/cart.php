@@ -34,7 +34,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2023 Brick Field E-Commerce. All rights reserved.</p>
+        <p>&copy; 2025 Brick Field E-Commerce. All rights reserved.</p>
     </footer>
 
     <script src="js/main.js"></script>

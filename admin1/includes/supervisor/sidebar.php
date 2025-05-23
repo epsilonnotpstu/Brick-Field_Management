@@ -21,7 +21,7 @@ $supervisor = $stmt->fetch(PDO::FETCH_ASSOC);
         <p><?php echo isset($supervisor['field_name']) ? htmlspecialchars($supervisor['field_name']) : 'N/A'; ?></p>
     </div>
     
-    <nav class="nav-container">
+    <nav >
         <ul>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>">
                 <a href="dashboard.php">

@@ -52,7 +52,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 </div>
 
 <footer>
-<p>&copy; 2023 Brick Field E-Commerce. All rights reserved.</p>
+<p>&copy; 2025 Brick Field E-Commerce. All rights reserved.</p>
 </footer>
 
 

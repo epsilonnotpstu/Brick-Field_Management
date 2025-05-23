@@ -34,7 +34,9 @@ if (!$product) {
         <li><a href="index.php">Home</a></li>
         <li><a href="products.php">Products</a></li>
         <li><a href="cart.php">Cart <span id="cart-count">0</span></a></li>
-        <li><a href="login.php">Login</a></li>
+        <!-- <li><a href="login.php">Login</a></li> -->
+          <li><a href="logout.php">Logout</a></li> 
+
     </ul>
 </nav>
     </header>
@@ -55,9 +57,9 @@ if (!$product) {
     </div>
 
     <footer>
-        <p>&copy; 2023 Brick Field E-Commerce. All rights reserved.</p>
+        <p>&copy; 2025 Brick Field E-Commerce. All rights reserved.</p>
     </footer>
 
-    <script src="/js/main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
