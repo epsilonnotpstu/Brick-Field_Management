@@ -94,21 +94,21 @@ $page_title = "Contact Us | Brick Field";
             <div class="contact-info">
                 <h2>Our Office</h2>
                 <address>
-                    <p><strong>Brick Field Ltd.</strong></p>
-                    <p>123 Industrial Area, Savar</p>
-                    <p>Dhaka, Bangladesh</p>
-                    <p>Postal Code: 1340</p>
+                    <p><strong>Joney Brick Field Ltd.</strong></p>
+                    <p>Adorsha Para, Magura</p>
+                    <p>Magura, Bangladesh</p>
+                    <p>Postal Code: 7600</p>
                 </address>
                 
                 <h2>Contact Details</h2>
                 <ul class="contact-methods">
-                    <li><strong>Phone:</strong> +880 1234 567890</li>
+                    <li><strong>Phone:</strong> +880 833054648</li>
                     <li><strong>Email:</strong> info@brickfield.com</li>
                     <li><strong>Hours:</strong> 8:00 AM - 6:00 PM (Sat-Thu)</li>
                 </ul>
                 
                 <div class="map-container">
-                    <iframe src="https://maps.google.com/maps?q=savar,dhaka&output=embed" 
+                    <iframe src="https://maps.google.com/maps?q=adorsha para,magura,khulna&output=embed" 
                             width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>

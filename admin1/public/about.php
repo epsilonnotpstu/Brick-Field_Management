@@ -17,7 +17,7 @@ $page_title = "About Brick Field | Quality Brick Manufacturer";
             <h1>About Brick Field</h1>
             <div class="about-content">
                 <div class="about-text">
-                    <h2>25 Years of Excellence in Brick Manufacturing</h2>
+                    <h2>30 Years of Excellence in Brick Manufacturing</h2>
                     <p>Founded in 1995, Brick Field has grown from a small local manufacturer to one of Bangladesh's most trusted brick suppliers. Our commitment to quality and customer satisfaction has remained unchanged throughout our journey.</p>
                     
                     <h3>Our Mission</h3>
@@ -33,7 +33,7 @@ $page_title = "About Brick Field | Quality Brick Manufacturer";
                 </div>
                 
                 <div class="about-image">
-                    <img src="images/factory.jpg" alt="Brick Field Factory">
+                    <img src="Bricks_factory.webp" alt="Brick Field Factory">
                 </div>
             </div>
         </section>
@@ -42,14 +42,14 @@ $page_title = "About Brick Field | Quality Brick Manufacturer";
             <h2>Our Leadership Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="images/ceo.jpg" alt="CEO">
+                    <img src="profile.avif" alt="CEO">
                     <h3>Md. Rahman</h3>
                     <p>Founder & CEO</p>
                 </div>
                 <div class="team-member">
-                    <img src="images/operations.jpg" alt="Operations Manager">
-                    <h3>Fatima Akter</h3>
-                    <p>Operations Manager</p>
+                    <img src="profile.avif" alt="Operations Manager">
+                    <h3>Md. Rafiq</h3>
+                    <p>Supervisor</p>
                 </div>
             </div>
         </section>

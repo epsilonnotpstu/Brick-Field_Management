@@ -1320,7 +1320,7 @@ a:hover {
     width: 250px;
     height: 100vh;
     position: fixed;
-    top: 100;
+    top: 100px;
     left: -250px;
     transition: left 0.3s ease;
     z-index: 999;
@@ -1481,6 +1481,7 @@ a:hover {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     text-align: center;
+    justify-items: center;
 }
 
 .stat-card h3 {
@@ -1750,22 +1751,18 @@ a:hover {
 
 
 h3 {
-    padding: 15px;
-    background-color: #eee;
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 8px;
 }
 
 h4 {
     padding: 15px;
     background-color: #eee;
 }
-/* .form-section-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 20px;
-} */
+.form-section {
+    padding: 5px;
+}
 
 /* Modal Styles */
 .modal {

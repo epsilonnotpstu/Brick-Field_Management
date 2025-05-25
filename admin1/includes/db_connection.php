@@ -7,7 +7,7 @@ $password = '';
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "yah baby";    
+    // echo "yah baby";    
     // Create admin user if not exists (for initial setup)
     $stmt = $conn->query("SELECT COUNT(*) FROM Users WHERE user_type = 'admin'");
     if ($stmt->fetchColumn() == 0) {
