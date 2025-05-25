@@ -504,3 +504,10 @@ address p {
         margin: 5px 0;
     }
 }
+h1#fac_name{
+    color: white;
+}
+p#quantity {
+    padding-left: 30px;
+    padding-bottom: 20px;
+}

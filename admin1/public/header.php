@@ -6,6 +6,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Determine active page for navigation styling
 $current_page = basename($_SERVER['PHP_SELF']);
+
+require_once '../includes/db_connection.php';
+$stmt= $conn->prepare('SELECT * FROM BrickField');
+$stmt->execute();
+$factory_name=$stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +27,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <div class="header-branding">
                 <a href="index.php">
                     <img src="rsz_2green_modern_and_minimalist_agriculture_farm_barn_logo.png" alt="Brick Field Logo" class="logo">
-                    <h1>Brick Field</h1>
+                    <h1 id="fac_name"><?php echo htmlspecialchars($factory_name['field_name']); ?></h1>
                 </a>
             </div>
             

@@ -44,7 +44,7 @@ $page_title = "Our Brick Products | Brick Field";
                 <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['display_name']); ?>">
                 <h3><?php echo htmlspecialchars($product['display_name']); ?></h3>
                 <p class="price">৳<?php echo number_format($product['base_price'], 2); ?></p>
-                <p>Min Order: <?php echo $product['min_order_quantity']; ?> pieces</p>
+                <p id="quantity">Min Order: <?php echo $product['min_order_quantity']; ?> pieces</p>
                 <a href="product_detail.php?id=<?php echo $product['product_id']; ?>" class="btn">View Details</a>
             </div>
             <?php endwhile; ?>
