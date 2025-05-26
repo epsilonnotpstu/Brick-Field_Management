@@ -254,3 +254,33 @@ footer {
 .success-message p {
     margin-bottom: 0.5rem;
 }
+
+
+.product-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.productdetails, .ratings {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.ratings ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.ratings li {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}

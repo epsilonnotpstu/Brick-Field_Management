@@ -511,3 +511,34 @@ p#quantity {
     padding-left: 30px;
     padding-bottom: 20px;
 }
+
+.ratings {
+    margin-top: 20px;
+}
+
+.reviews ul {
+    list-style: none;
+    padding: 0;
+}
+
+.reviews ul li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.reviews ul li:last-child {
+    border-bottom: none;
+}
+
+.reviews ul li strong {
+    display: block;
+    font-size: 1.1em;
+}
+
+.reviews ul li p {
+    margin: 5px 0;
+}
+
+.reviews ul li small {
+    color: #666;
+}

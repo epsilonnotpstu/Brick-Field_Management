@@ -22,6 +22,24 @@ if (!$product) {
 }
 
 $page_title = $product['display_name'] . " | Brick Field";
+
+// Fetch average rating and review count
+$stmt = $pdo->prepare("SELECT AVG(rating) as avg_rating, COUNT(rating) as rating_count FROM CustomerRatings WHERE product_id = ?");
+$stmt->execute([$product_id]);
+$rating_data = $stmt->fetch();
+$avg_rating = $rating_data['avg_rating'] ? round($rating_data['avg_rating'], 1) : 0;
+$rating_count = $rating_data['rating_count'];
+
+// Fetch all reviews
+$stmt = $pdo->prepare("
+    SELECT cr.rating, cr.review, cr.created_at, u.username 
+    FROM CustomerRatings cr 
+    JOIN Users u ON cr.user_id = u.user_id 
+    WHERE cr.product_id = ? 
+    ORDER BY cr.created_at DESC
+");
+$stmt->execute([$product_id]);
+$reviews = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,8 +76,28 @@ $page_title = $product['display_name'] . " | Brick Field";
                 <p><?php echo htmlspecialchars($product['description']); ?></p>
             </div>
             
-            
+           
         </div>
+         <div class="ratings">
+                <h1>Customer Ratings</h1>
+                <p>Average Rating: <?php echo $avg_rating ? $avg_rating . " ($rating_count reviews)" : "No ratings yet"; ?></p>
+                <?php if ($rating_count > 0): ?>
+                    <div class="reviews">
+                        <h2>Reviews</h2>
+                        <ul>
+                            <?php foreach ($reviews as $review): ?>
+                                <li>
+                                    <strong><?php echo htmlspecialchars($review['username']); ?> (<?php echo $review['rating']; ?> Star<?php echo $review['rating'] > 1 ? 's' : ''; ?>)</strong>
+                                    <p><?php echo htmlspecialchars($review['review'] ?: 'No review provided'); ?></p>
+                                    <small><?php echo $review['created_at']; ?></small>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <p>No reviews available.</p>
+                <?php endif; ?>
+            </div>
     </main>
 
     <?php include 'footer.php'; ?>
